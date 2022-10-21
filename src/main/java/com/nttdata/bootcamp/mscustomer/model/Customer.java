@@ -4,10 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Date;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
 
-@Document
+@Document(collection = "customer")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -15,9 +19,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Customer {
 
     @Id
-    private Integer customerId;
+    private String customerId;
+    private String documentNumber;
     private String name;
     private String lastname;
-    private Integer typeCustomerId;
+    private String  typeCustomerId;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date createdAt;
+	
+    
+    
 
 }
