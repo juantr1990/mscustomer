@@ -9,6 +9,7 @@ import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Document(collection = "customer")
@@ -19,7 +20,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Customer {
 
     @Id
-    private String customerId;
+    private String id;
     private String documentNumber;
     private String name;
     private String lastname;

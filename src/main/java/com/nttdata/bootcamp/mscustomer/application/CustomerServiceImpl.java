@@ -14,11 +14,21 @@ public class CustomerServiceImpl implements CustomerService{
     CustomerRepository customerRepository;
     @Override
     public Mono<Customer> insertCustomer(Mono<Customer> customer) {
-        return customer.flatMap(customerRepository::insert);
+        return customer.flatMap(customerRepository::save);
     }
 
     @Override
     public Flux<Customer> retrieveAll() {
         return customerRepository.findAll();
     }
+
+	@Override
+	public Mono<Customer> findById(String id) {
+		return customerRepository.findById(id);
+	}
+
+	@Override
+	public Mono<Void> delete(Customer customer) {
+		return customerRepository.delete(customer);
+	}
 }
