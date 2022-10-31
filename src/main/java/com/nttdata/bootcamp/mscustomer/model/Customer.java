@@ -27,6 +27,7 @@ public class Customer {
     private String  typeCustomerId;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date createdAt;
+    
 	
     
     
