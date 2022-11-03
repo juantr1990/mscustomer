@@ -5,7 +5,6 @@ import com.nttdata.bootcamp.mscustomer.model.Customer;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.URI;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,7 +32,8 @@ public class CustomerController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public Mono<Customer> crear(@RequestBody Customer customer) {
 		log.info(demoString);
-		customer.setCreatedAt(new Date());
+		//if(customer.getCreatedAt() == null)
+			//customer.setCreatedAt(new Date());
 		return customerService.insertCustomer(Mono.just(customer));
 	}
 
