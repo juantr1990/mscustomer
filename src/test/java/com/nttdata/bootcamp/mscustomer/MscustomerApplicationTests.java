@@ -3,7 +3,6 @@ package com.nttdata.bootcamp.mscustomer;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
@@ -17,10 +16,12 @@ import com.nttdata.bootcamp.mscustomer.application.CustomerController;
 import com.nttdata.bootcamp.mscustomer.application.CustomerService;
 import com.nttdata.bootcamp.mscustomer.model.Customer;
 
-import  static  org.mockito.ArgumentMatchers.any;
-import  static org.mockito.BDDMockito.given;
 import  static  org.mockito.Mockito.when;
 
+import java.util.Arrays;
+import java.util.List;
+
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @ExtendWith(SpringExtension.class)
@@ -35,8 +36,8 @@ class MscustomerApplicationTests {
 	private CustomerService customerService;
 	
 	@Test
-	public void crearTest() {
-		Mono<Customer> customer = Mono.just(new Customer("4444", "4565456", "JUAN", "TORRES","E",null));
+	void crearTest() {
+		Mono<Customer> customer = Mono.just(new Customer("4444", "4565456", "JUAN", "TORRES","E"));
 			when(customerService.insertCustomer(customer)).thenReturn(customer);
 			webTestClient.post().uri("/customer")
 			.contentType(MediaType.APPLICATION_JSON)
@@ -44,6 +45,21 @@ class MscustomerApplicationTests {
 			.body(Mono.just(customer), Customer.class)
 			.exchange()
 			.expectStatus().isCreated();
+	}
+	
+	//@Test
+	void getAllTest() {
+		/**
+		Mono<List<Customer>> customerm = Mono.just(Arrays.asList(new Customer("4444", "4565456", "JUAN", "TORRES","E"),
+				new Customer("4444", "4565456", "JUAN", "TORRES","E")));
+		Flux<Customer> customerf = customerm.flatMapMany(Flux::fromIterable);
+		when(customerService.retrieveAll()).thenReturn(customerf);
+		webTestClient.get().uri("/customer")
+		.exchange()
+		.expectStatus().isOk()
+		.expectHeader().contentType(MediaType.APPLICATION_JSON_VALUE)
+		.expectBodyList(Customer.class);
+		*/
 	}
 	
 

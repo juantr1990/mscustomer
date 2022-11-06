@@ -32,12 +32,10 @@ public class CustomerController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public Mono<Customer> crear(@RequestBody Customer customer) {
 		log.info(demoString);
-		//if(customer.getCreatedAt() == null)
-			//customer.setCreatedAt(new Date());
 		return customerService.insertCustomer(Mono.just(customer));
 	}
 
-	@GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public Flux<Customer> retrieveAll() {
 		return customerService.retrieveAll();
 	}
@@ -52,9 +50,10 @@ public class CustomerController {
 
 	@DeleteMapping("/{id}")
 	public Mono<ResponseEntity<Void>> eliminar(@PathVariable String id) {
-		return customerService.findById(id).flatMap(p -> {
-			return customerService.delete(p).then(Mono.just(new ResponseEntity<Void>(HttpStatus.NO_CONTENT)));
-		}).defaultIfEmpty(new ResponseEntity<Void>(HttpStatus.NOT_FOUND));
+		return customerService.findById(id)
+				.flatMap(customerService::delete)
+				.then(Mono.just(new ResponseEntity<Void>(HttpStatus.NO_CONTENT)))
+				.defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
 
 	@PutMapping("/{id}")

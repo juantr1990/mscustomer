@@ -10,8 +10,10 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import com.nttdata.bootcamp.mscustomer.infraestructure.CustomerRepository;
 import com.nttdata.bootcamp.mscustomer.model.Customer;
 
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
+@Slf4j
 @Component
 public class CustomerHandler {
 
@@ -33,6 +35,7 @@ public class CustomerHandler {
 	
 	
 	public Mono<ServerResponse> getAll(ServerRequest serverRequest){
+		log.info("serverRequest->",serverRequest);
 		return ServerResponse.ok()
 				.contentType(MediaType.APPLICATION_JSON)
 				.body(customerRepository.findAll().log("func"),Customer.class);
